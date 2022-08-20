@@ -1,6 +1,6 @@
 package io.github.nginx.ops.client.comm.domain.vo;
 
-import io.github.nginx.ops.client.comm.util.SpringUtils;
+import io.github.nginx.ops.client.comm.util.MessageUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -24,6 +24,9 @@ import java.util.Collection;
 @ApiModel("通用返回实体类")
 public class R<T> implements Serializable {
 
+  /** 成功 */
+  public static final String SUCCESS = "0000";
+
   /** 编码 */
   @ApiModelProperty("返回编码")
   private String code;
@@ -40,20 +43,20 @@ public class R<T> implements Serializable {
   @ApiModelProperty("总条数")
   private long count;
 
-  public static R success(String code) {
+  public static R success(String message) {
     return R.builder()
-        .code(code)
-        .message(SpringUtils.getMessage(code, (Object) null))
+        .code(SUCCESS)
+        .message(message)
         .time(System.currentTimeMillis())
         .count(0L)
         .build();
   }
 
-  public static <T> R<T> success(String code, T data) {
+  public static <T> R<T> success(String message, T data) {
     return (R<T>)
         R.builder()
-            .code(code)
-            .message(SpringUtils.getMessage(code, (Object) null))
+            .code(SUCCESS)
+            .message(message)
             .time(System.currentTimeMillis())
             .data(data)
             .count(data instanceof Collection ? ((Collection<?>) data).size() : 1L)
@@ -63,7 +66,7 @@ public class R<T> implements Serializable {
   public static R error(String code) {
     return R.builder()
         .code(code)
-        .message(SpringUtils.getMessage(code, (Object) null))
+        .message(MessageUtils.getMessage(code))
         .time(System.currentTimeMillis())
         .build();
   }

@@ -23,4 +23,12 @@ public class RestExceptionHandler {
     log.warn("业务异常警告, 异常编码为:{}, 异常信息为:{}", r.getCode(), r.getMessage());
     return r;
   }
+
+  // /** 自定义异常抛出 */
+  // @ExceptionHandler(Exception.class)
+  // public R businessExceptionHandler(Exception e) {
+  //   R r = R.error(e.getCode());
+  //   log.warn("业务异常警告, 异常编码为:{}, 异常信息为:{}", r.getCode(), r.getMessage());
+  //   return r;
+  // }
 }

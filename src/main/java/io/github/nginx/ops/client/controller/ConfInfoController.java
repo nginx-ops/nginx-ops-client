@@ -87,6 +87,6 @@ public class ConfInfoController {
                 .build());
       }
     }
-    return R.success("查询成功", fileVoList);
+    return R.success("获取成功!", fileVoList);
   }
 }
