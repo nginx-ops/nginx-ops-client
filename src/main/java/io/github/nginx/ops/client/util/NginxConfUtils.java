@@ -21,12 +21,15 @@ public class NginxConfUtils {
   public static final String CURRENT_DIR = SystemUtil.getUserInfo().getCurrentDir();
   /** 获取项目路径 */
   public static final String FILE_SEPARATOR = FileUtil.FILE_SEPARATOR;
-  /** 获取项目路径 */
+  /** nginx 配置文件临时路径 */
   public static final String TMP_NGINX_CONF_PATH =
-      CURRENT_DIR + "tmp" + FILE_SEPARATOR + "conf.d" + FILE_SEPARATOR + "nginx.conf";
-  /** 获取项目路径 */
+      CURRENT_DIR + "conf.d" + FILE_SEPARATOR + "tmp" + FILE_SEPARATOR + "nginx.conf";
+  /** nginx 配置文件测试路径 */
   public static final String TEST_NGINX_CONF_PATH =
-      CURRENT_DIR + "test" + FILE_SEPARATOR + "conf.d" + FILE_SEPARATOR + "nginx.conf";
+      CURRENT_DIR + "conf.d" + FILE_SEPARATOR + "test" + FILE_SEPARATOR + "nginx.conf";
+  /** nginx 配置文件生产路径 */
+  public static final String PROD_NGINX_CONF_PATH =
+      CURRENT_DIR + "conf.d" + FILE_SEPARATOR + "prod" + FILE_SEPARATOR + "nginx.conf";
 
   /**
    * 构建sever 配置文件

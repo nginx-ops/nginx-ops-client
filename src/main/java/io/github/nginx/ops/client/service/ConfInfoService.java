@@ -1,6 +1,7 @@
 package io.github.nginx.ops.client.service;
 
 import io.github.nginx.ops.client.domain.dto.GenerateConfDTO;
+import io.github.nginx.ops.client.domain.dto.ReplaceDTO;
 import io.github.nginx.ops.client.domain.dto.RunConfDTO;
 import io.github.nginx.ops.client.domain.dto.TestConfDTO;
 import io.github.nginx.ops.client.domain.vo.ConfInfoVO;
@@ -34,4 +35,11 @@ public interface ConfInfoService {
    * @return
    */
   String run(RunConfDTO dto);
+
+  /**
+   * 替换配置文件
+   *
+   * @return
+   */
+  String replace(ReplaceDTO dto);
 }

@@ -1,13 +1,15 @@
 package io.github.nginx.ops.client.controller;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.lihao.nginx.ops.module.conf.domain.vo.FileVo;
 import io.github.nginx.ops.client.comm.domain.R;
 import io.github.nginx.ops.client.domain.dto.GenerateConfDTO;
+import io.github.nginx.ops.client.domain.dto.ReplaceDTO;
 import io.github.nginx.ops.client.domain.dto.RunConfDTO;
 import io.github.nginx.ops.client.domain.dto.TestConfDTO;
 import io.github.nginx.ops.client.domain.vo.ConfInfoVO;
+import io.github.nginx.ops.client.domain.vo.FileVo;
 import io.github.nginx.ops.client.service.ConfInfoService;
+import io.github.nginx.ops.client.util.NginxConfUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +56,16 @@ public class ConfInfoController {
     return R.success(service.run(dto));
   }
 
+  @ApiOperation("替换配置文件")
+  @PostMapping("replace")
+  public R replace(@RequestBody ReplaceDTO dto) {
+    if (ObjectUtil.isEmpty(dto.getNginxConfPath())) {
+      dto.setNginxConfPath(NginxConfUtils.PROD_NGINX_CONF_PATH);
+    }
+    service.replace(dto);
+    return R.success("替换成功!");
+  }
+
   @ApiOperation("获取磁盘树")
   @GetMapping("node/list")
   public R<List<FileVo>> nodeList(String pid) {
@@ -64,14 +76,16 @@ public class ConfInfoController {
       fileList = new File(pid).listFiles();
     }
     List<FileVo> fileVoList = new ArrayList<>();
-    for (File file : fileList) {
-      fileVoList.add(
-          FileVo.builder()
-              .id(file.getPath())
-              .pid(file.getParent())
-              .isParent(file.isDirectory())
-              .name(file.getName())
-              .build());
+    if (ObjectUtil.isNotEmpty(fileList)) {
+      for (File file : fileList) {
+        fileVoList.add(
+            FileVo.builder()
+                .id(file.getPath())
+                .pid(file.getParent())
+                .isParent(file.isDirectory())
+                .name(file.getName())
+                .build());
+      }
     }
     return R.success("查询成功", fileVoList);
   }

@@ -4,25 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
 
 /**
  * @author lihao3
- * @date 2022/8/19
+ * @date 2022/8/20
  */
 @Getter
+@Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RunConfDTO implements Serializable {
+public class ReplaceDTO implements Serializable {
 
-  /** nginx执行脚本地址 */
-  private String nginxSbinPath;
   /** nginx配置文件地址 */
   private String nginxConfPath;
-  /** nginx执行脚本命令 */
-  private String nginxRunCmd;
 }

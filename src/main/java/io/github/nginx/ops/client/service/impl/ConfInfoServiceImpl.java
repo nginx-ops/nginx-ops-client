@@ -8,6 +8,7 @@ import com.github.odiszapc.nginxparser.NgxConfig;
 import com.github.odiszapc.nginxparser.NgxDumper;
 import com.github.odiszapc.nginxparser.NgxParam;
 import io.github.nginx.ops.client.domain.dto.GenerateConfDTO;
+import io.github.nginx.ops.client.domain.dto.ReplaceDTO;
 import io.github.nginx.ops.client.domain.dto.RunConfDTO;
 import io.github.nginx.ops.client.domain.dto.TestConfDTO;
 import io.github.nginx.ops.client.domain.vo.ConfInfoItemVO;
@@ -123,19 +124,33 @@ public class ConfInfoServiceImpl implements ConfInfoService {
     if (!result.contains("successful")) {
       throw new BusinessException(result);
     }
-      FileUtil.getLineSeparator()
+    // 清空原路径
+    FileUtil.clean(NginxConfUtils.TMP_NGINX_CONF_PATH);
+    // 复制临时文件到测试目录中
+    FileUtil.copy(NginxConfUtils.TMP_NGINX_CONF_PATH, NginxConfUtils.TEST_NGINX_CONF_PATH, true);
     return result;
   }
 
   @Override
   public String run(RunConfDTO dto) {
-      Fileu
     String result =
         RuntimeUtil.execForStr(
-            dto.getNginxSbinPath() + " -t -c " + NginxConfUtils.TMP_NGINX_CONF_PATH);
+            dto.getNginxSbinPath() + " -t -c " + NginxConfUtils.TEST_NGINX_CONF_PATH);
     if (!result.contains("successful")) {
       throw new BusinessException(result);
     }
+    // 清空原路径
+    FileUtil.clean(NginxConfUtils.TMP_NGINX_CONF_PATH);
+    // 复制临时文件到测试目录中
+    FileUtil.copy(NginxConfUtils.TMP_NGINX_CONF_PATH, NginxConfUtils.TEST_NGINX_CONF_PATH, true);
     return result;
+  }
+
+  @Override
+  public String replace(ReplaceDTO dto) {
+    // 清空原路径
+    FileUtil.clean(dto.getNginxConfPath());
+    // 复制临时文件到测试目录中
+    FileUtil.copy(NginxConfUtils.TEST_NGINX_CONF_PATH, dto.getNginxConfPath(), true);
   }
 }
