@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    nacos:
+      # 注册中心(根据情况修改)
+      discovery:
+        enabled: false
+      # 配置中心(根据情况修改)
+      config:
+        enabled: false
+
+# 测试环境打印SQL脚本
+logging:
+  level:
+    io.github.nginx.ops: debug

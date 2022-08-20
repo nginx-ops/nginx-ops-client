@@ -1,5 +1,6 @@
-package io.github.nginx.ops.client.comm.domain;
+package io.github.nginx.ops.client.comm.domain.vo;
 
+import io.github.nginx.ops.client.comm.util.SpringUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -23,14 +24,12 @@ import java.util.Collection;
 @ApiModel("通用返回实体类")
 public class R<T> implements Serializable {
 
-  public static final String SUCCESS = "200";
-
   /** 编码 */
-  @ApiModelProperty("返回编码(200代表成功)")
+  @ApiModelProperty("返回编码")
   private String code;
   /** 内容 */
   @ApiModelProperty("提示内容")
-  private String msg;
+  private String message;
   /** 反馈时间 */
   @ApiModelProperty("反馈时间")
   private long time;
@@ -41,22 +40,31 @@ public class R<T> implements Serializable {
   @ApiModelProperty("总条数")
   private long count;
 
-  public static R success(String msg) {
-    return R.builder().code(SUCCESS).msg(msg).time(System.currentTimeMillis()).count(0L).build();
+  public static R success(String code) {
+    return R.builder()
+        .code(code)
+        .message(SpringUtils.getMessage(code, (Object) null))
+        .time(System.currentTimeMillis())
+        .count(0L)
+        .build();
   }
 
-  public static <T> R<T> success(String msg, T data) {
+  public static <T> R<T> success(String code, T data) {
     return (R<T>)
         R.builder()
-            .code(SUCCESS)
-            .msg(msg)
+            .code(code)
+            .message(SpringUtils.getMessage(code, (Object) null))
             .time(System.currentTimeMillis())
             .data(data)
             .count(data instanceof Collection ? ((Collection<?>) data).size() : 1L)
             .build();
   }
 
-  public static R error(String code, String msg) {
-    return R.builder().code(code).msg(msg).time(System.currentTimeMillis()).build();
+  public static R error(String code) {
+    return R.builder()
+        .code(code)
+        .message(SpringUtils.getMessage(code, (Object) null))
+        .time(System.currentTimeMillis())
+        .build();
   }
 }

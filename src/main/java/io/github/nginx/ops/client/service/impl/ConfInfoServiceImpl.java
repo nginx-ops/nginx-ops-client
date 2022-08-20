@@ -7,6 +7,7 @@ import com.github.odiszapc.nginxparser.NgxBlock;
 import com.github.odiszapc.nginxparser.NgxConfig;
 import com.github.odiszapc.nginxparser.NgxDumper;
 import com.github.odiszapc.nginxparser.NgxParam;
+import io.github.nginx.ops.client.comm.exception.BusinessException;
 import io.github.nginx.ops.client.domain.dto.GenerateConfDTO;
 import io.github.nginx.ops.client.domain.dto.ReplaceDTO;
 import io.github.nginx.ops.client.domain.dto.RunConfDTO;
@@ -147,7 +148,7 @@ public class ConfInfoServiceImpl implements ConfInfoService {
   }
 
   @Override
-  public String replace(ReplaceDTO dto) {
+  public void replace(ReplaceDTO dto) {
     // 清空原路径
     FileUtil.clean(dto.getNginxConfPath());
     // 复制临时文件到测试目录中

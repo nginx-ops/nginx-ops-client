@@ -1,7 +1,7 @@
 package io.github.nginx.ops.client.controller;
 
 import cn.hutool.core.util.ObjectUtil;
-import io.github.nginx.ops.client.comm.domain.R;
+import io.github.nginx.ops.client.comm.domain.vo.R;
 import io.github.nginx.ops.client.domain.dto.GenerateConfDTO;
 import io.github.nginx.ops.client.domain.dto.ReplaceDTO;
 import io.github.nginx.ops.client.domain.dto.RunConfDTO;

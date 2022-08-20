@@ -36,10 +36,6 @@ public interface ConfInfoService {
    */
   String run(RunConfDTO dto);
 
-  /**
-   * 替换配置文件
-   *
-   * @return
-   */
-  String replace(ReplaceDTO dto);
+  /** 替换配置文件 */
+  void replace(ReplaceDTO dto);
 }
