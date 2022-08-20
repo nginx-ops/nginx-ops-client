@@ -1,6 +1,5 @@
 package io.github.nginx.ops.client.comm.domain.vo;
 
-import io.github.nginx.ops.client.comm.util.MessageUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,9 @@ import java.util.Collection;
 public class R<T> implements Serializable {
 
   /** 成功 */
-  public static final String SUCCESS = "0000";
+  public static final String SUCCESS = "200";
+  /** 成功 */
+  public static final String ERROR = "500";
 
   /** 编码 */
   @ApiModelProperty("返回编码")
@@ -63,11 +64,7 @@ public class R<T> implements Serializable {
             .build();
   }
 
-  public static R error(String code) {
-    return R.builder()
-        .code(code)
-        .message(MessageUtils.getMessage(code))
-        .time(System.currentTimeMillis())
-        .build();
+  public static R error(String message) {
+    return R.builder().code(ERROR).message(message).time(System.currentTimeMillis()).build();
   }
 }
